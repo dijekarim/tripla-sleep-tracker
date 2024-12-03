@@ -1,0 +1,46 @@
+services:
+  app:
+    container_name: sleep-tracker-app
+    build:
+      context: .
+    command: bundle exec rails s -b 0.0.0.0
+    volumes:
+      - .:/app
+    ports:
+      - "4000:3000"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST: db
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+
+  db:
+    container_name: sleep-tracker-db
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  redis:
+    container_name: sleep-tracker-redis
+    image: redis:7
+    command: redis-server
+
+  sidekiq:
+    container_name: sleep-tracker-sidekiq
+    build:
+      context: .
+    command: bundle exec sidekiq
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - db
+
+volumes:
+  pg_data:
