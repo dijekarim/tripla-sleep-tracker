@@ -8,4 +8,17 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   get 'up' => 'rails/health#show'
+
+  namespace :api do
+    namespace :v1 do
+      resources :sleep_records, only: [:index] do
+        collection do
+          post :clock_in
+          post :clock_out
+          get :followees_sleep_records
+        end
+      end
+      resources :follows, only: [:index, :create, :destroy]
+    end
+  end  
 end

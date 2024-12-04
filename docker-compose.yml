@@ -16,6 +16,11 @@ services:
     depends_on:
       - db
       - redis
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:3000/up"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
 
   db:
     container_name: sleep-tracker-db

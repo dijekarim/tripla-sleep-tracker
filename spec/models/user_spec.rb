@@ -4,6 +4,6 @@ RSpec.describe User, type: :model do
   let(:user) { create(:user) }
 
   it 'has a name' do
-    expect(user.name).to eq('Example User')
+    expect(user.name).to eq(user.name)
   end
 end

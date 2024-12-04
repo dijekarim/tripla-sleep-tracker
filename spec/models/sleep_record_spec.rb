@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe SleepRecord, type: :model do
   let(:user) { create(:user) }
-  let(:sleep_record) { create(:sleep_record, user: user) }
+  let(:sleep_record) { create(:sleep_record, user: user, clock_in: 16.hours.ago, clock_out: 8.hours.ago) }
+  let(:sleep_record) { create(:sleep_record, user: user, clock_in: 8.hours.ago, clock_out: 4.hours.ago) }
 
   it 'has a clock_in' do
     expect(sleep_record.clock_in).not_to be_nil
