@@ -14,6 +14,8 @@ class Api::V1::FollowsController < ApplicationController
   
   def create
     follow = current_user.follows.create!(user_id: params[:user_id])
+    # Trigger background job to update followers' sleep data
+    UpdateFollowersSleepDataJob.perform_async(current_user.id)
     render json: follow, status: :created
   rescue ActiveRecord::RecordInvalid
     render json: {error: 'You are already following this user'}, status: :unprocessable_entity
@@ -21,6 +23,8 @@ class Api::V1::FollowsController < ApplicationController
 
   def destroy
     follow = current_user.follows.find_by!(user_id: params[:id])
+    # Trigger background job to update followers' sleep data
+    UpdateFollowersSleepDataJob.perform_async(current_user.id)
     follow.destroy
     head :no_content
   rescue ActiveRecord::RecordNotFound
