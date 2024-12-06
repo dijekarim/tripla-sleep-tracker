@@ -126,7 +126,11 @@ docker compose restart app
 
 ### **API Endpoints**
 
-#### **1. Clock In/Out**
+#### **1. Authentication**
+
+- **Authorization**: For simplicity just fill the `Authorization` Header with `user_id` it can be use jwt for the future improve
+
+#### **2. Clock In/Out**
 
 - **GET `/api/v1/sleep_records`**: Retrieve all user's sleep records
 
@@ -134,7 +138,7 @@ docker compose restart app
 
 - **POST `/api/v1/sleep_records/clock_out`**: Records the user's clock-out time.
 
-#### **2. Follow/Unfollow**
+#### **3. Follow/Unfollow**
 
 - **POST `/api/v1/follows`**: Follow another user with payload/body json
   ```json
@@ -145,7 +149,7 @@ docker compose restart app
 
 - **DELETE `/api/v1/follows/:user_id`**: Unfollow a user.
 
-#### **3. Sleep Records of Followees**
+#### **4. Sleep Records of Followees**
 
 - **GET `/api/v1/sleep_records/followees_sleep_records`**:
   Retrieve sleep records of all followees from the last week, sorted by sleep duration.
@@ -172,7 +176,7 @@ Contributions are welcome! Please follow these steps:
 
 1. Fork the repository.
 2. Create a new branch: `git checkout -b feature/name`.
-3. Make your changes and commit them: `git commit -m 'Add new feature'`.
+3. Make your changes and commit them: `git commit -m 'feat: Add new feature'`.
 4. Push to the branch: `git push origin feature-name`.
 5. Submit a pull request.
 
